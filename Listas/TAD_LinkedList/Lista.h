@@ -30,11 +30,21 @@ int Vazia(TLista Lista);
 
 void Inserir(TProduto x, TLista *Lista);
 
+void isertInOrder(TLista *Lista, TProduto x);
+
 void Imprimir(TLista Lista);
+
+void recursivePrintList(TCelula *Celula);
+
+void printNthElement(TLista Lista, int nth);
 
 TCelula* Pesquisar(TLista Lista, TProduto Item);
 
+TCelula* recursiveSearch(TCelula *Celula, TProduto Item);
+
 void Excluir(TLista *Lista, TProduto *Item);
+
+void deleteNthElement(TLista Lista, int nth);
 
 void LiberarLista(TLista *Lista);
 

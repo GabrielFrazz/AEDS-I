@@ -25,16 +25,17 @@ int maiorIterativo(int vet[], int tam)
     return maior;
 }
 
-int maiorRecursiva(int vet[], int tam){
+int BiggerRec(int vet[], int size){
     
-    if(tam == 1){
+    if(size == 1){
         return vet[0];
     }else{
-        int m = maiorRecursiva(vet, tam-1);
-        if(m>vet[tam-1]){
+        int m = BiggerRec(vet, size-1);
+        if(m>vet[size-1]){
             return m;
         }else{
-            return vet[tam-1];
+            return vet[size-1];
         }
     }
+
 }

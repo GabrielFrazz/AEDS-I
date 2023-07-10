@@ -8,10 +8,13 @@ void MSG_MENU()
 {
     printf("\n\n\t>>>>>>>>>>>>>>>>>>>>>>> OPCOES DE MENU <<<<<<<<<<<<<<<<<<<<<<<<");
     printf("\n\n\t1. INSERIR");
-    printf("  \n\t2. PESQUISAR");
-    printf("  \n\t3. EXCLUIR");
-    printf("  \n\t4. IMPRIMIR");
-    printf("  \n\t5. SAIR");
+    printf("  \n\t2. PESQUISAR POR CODIGO");
+    printf("  \n\t3. PESQUISAR POR NOME");
+    printf("  \n\t4. EXCLUIR");
+    printf("  \n\t5. EXCLUIR POR POSICAO");
+    printf("  \n\t6. IMPRIMIR");
+    printf("  \n\t7. IMPRIMIR POR POSICAO");
+    printf("  \n\t8. SAIR");
 
 }
 
@@ -21,6 +24,8 @@ void MENU(TLista* Lista){
     int opcao=0;
     do
     {
+        system("cls");
+        printf("\n\t---tamanho atual da lista: %d---\n", Lista->tamanho);
         MSG_MENU();
         printf("\n\nDigite uma opcao: ");
         fflush(stdin);
@@ -32,7 +37,7 @@ void MENU(TLista* Lista){
                 printf("Entre com um produto:\n\n");
 
                 LerProduto(&produto);
-                Inserir(produto, Lista);
+                isertInOrder(Lista,produto);
                 printf("\n");
 
                 system("PAUSE");
@@ -52,11 +57,30 @@ void MENU(TLista* Lista){
                     ImprimirProduto(Aux->prox->item);
                     printf("\n");
                 }else{
-                    printf("\n!produto não está na lista!\n");
+                    printf("\n!produto nao esta na lista!\n");
                 }
                 system("PAUSE");
                 break;
             case 3:
+                system("cls");
+                printf("digite o nome do produto que deseja pesquisar:\n");
+                printf("->");
+
+                fflush(stdin);
+                fgets(produto.nome, 50, stdin);
+                fflush(stdin);
+
+                Aux = recursiveSearch(Lista->primeiro->prox, produto);
+
+                if(Aux != NULL){
+                    ImprimirProduto(Aux->item);
+                    printf("\n");
+                }else{
+                    printf("\n!produto nao esta na lista!\n");
+                }
+                system("PAUSE");
+                break;   
+            case 4:
                 system("cls");
                 printf("\ndigite o codigo do produto que deseja Excluir:\n");
                 printf("->");
@@ -86,12 +110,29 @@ void MENU(TLista* Lista){
 
                 system("PAUSE");
                 break;
-            case 4:
+            case 5:
                 system("cls");
-                Imprimir(*Lista);
+                printf("\ndigite a posicao do produto que deseja Excluir:\n");
+                printf("->");
+                fflush(stdin);
+                scanf("%d", &produto.codigo);
+                deleteNthElement(*Lista, produto.codigo);
+                break;
+            case 6:
+                system("cls");
+                recursivePrintList(Lista->primeiro->prox);
                 system("PAUSE");
                 break;
-            case 5:
+            case 7:
+                system("cls");
+                printf("\ndigite a posicao do produto que deseja Imprimir:\n");
+                printf("->");
+                fflush(stdin);
+                scanf("%d", &produto.codigo);
+                printNthElement(*Lista, produto.codigo);
+                system("PAUSE");
+                break;
+            case 8:
                 system("cls");
                 printf("\n\n\n\t >>>>>> MSG: Saindo do MODULO...!!! <<<<<<\n");
                 LiberarLista(Lista);
@@ -102,5 +143,6 @@ void MENU(TLista* Lista){
                 printf("\n\n\n\t >>>>>> MSG: Digite uma opcao valida!!! <<<<<<\n");
                 system("PAUSE");
             } // fim do bloco switch
-    } while(opcao != 5);
+    } while(opcao != 8);
+    
 }

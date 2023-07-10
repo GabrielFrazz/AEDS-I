@@ -2,11 +2,14 @@
 #include <stdlib.h>
 
 
-int tamanhoString(char string[], int cont){
+int stringSize(char string[], int cont){
+
     if(string[cont] == '\0'){
         return cont-1;
     }
-    return tamanhoString(string,cont+1);
+    
+    return stringSize(string,cont+1);
+
 }
 
 int main(){

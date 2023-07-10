@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "Lista.h"
 
@@ -22,6 +23,31 @@ void Inserir(TProduto x, TLista *Lista){
     Lista -> tamanho++;
 }
 
+void isertInOrder(TLista *Lista, TProduto x){
+
+    if(Vazia(*Lista) ||strcmp(Lista->ultimo->item.nome,x.nome)<0){
+        Inserir(x,Lista);
+        return;
+    }
+
+    TCelula *new = (TCelula *)malloc(sizeof(TCelula));
+    new->item = x;
+    TCelula *Aux = Lista->primeiro;
+    
+    while(Aux != NULL){
+        
+        if(strcmp(Aux->prox->item.nome, x.nome)>0){
+            new->prox = Aux->prox;
+            Aux->prox = new;
+            return;
+        }
+        
+        Aux = Aux->prox;
+    }
+
+}
+
+
 void Imprimir(TLista Lista){
     TCelula* Aux;
     Aux = Lista.primeiro -> prox;
@@ -29,6 +55,31 @@ void Imprimir(TLista Lista){
         ImprimirProduto(Aux->item);
         Aux = Aux -> prox;
     }
+}
+
+void recursivePrintList(TCelula *Celula){
+    
+    if(Celula != NULL){
+        ImprimirProduto(Celula -> item);
+        recursivePrintList(Celula -> prox);
+    }    
+
+}
+
+void printNthElement(TLista Lista, int nth){
+
+    TCelula *Aux = Lista.primeiro;
+
+    for(int i = 0; i < nth; i++){
+        Aux = Aux -> prox;
+    }
+
+    if(Aux != NULL){
+        ImprimirProduto(Aux->item);
+    }else{
+        printf("\n!Celula não existe!\n");
+    }
+
 }
 
 TCelula* Pesquisar(TLista Lista, TProduto Item){
@@ -40,6 +91,20 @@ TCelula* Pesquisar(TLista Lista, TProduto Item){
         Aux = Aux -> prox;
     }
     return NULL;
+}
+
+TCelula* recursiveSearch(TCelula *Celula, TProduto Item){
+
+    if(Celula == NULL){
+        return NULL;
+    }
+
+    if(strcmp(Item.nome, Celula->item.nome) == 0){
+        return Celula;
+    }
+
+    return recursiveSearch(Celula->prox, Item);
+
 }
 
 void Excluir(TLista *Lista, TProduto *Item){
@@ -56,6 +121,22 @@ void Excluir(TLista *Lista, TProduto *Item){
     }else{
         printf("\nProduto nao encontrado\n");
         Item -> codigo = -1;
+    }
+
+}
+
+void deleteNthElement(TLista Lista, int nth){
+
+    TCelula *Aux = Lista.primeiro;
+
+    for(int i = 0; i < nth; i++){
+        Aux = Aux -> prox;
+    }
+
+    if(Aux != NULL){
+        Excluir(&Lista, &Aux->item);
+    }else{
+        printf("\n!Celula não existe!\n");
     }
 
 }

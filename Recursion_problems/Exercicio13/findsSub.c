@@ -19,15 +19,15 @@ int main(){
 }
 
 int isContained(char whole[], char sub[], int stts, int i, int j){
+
     if(whole[i] == '\0' || sub[j] == '\0'){
         return stts;
-    }
-    if(whole[i]==sub[j]){
+    }else if(whole[i]==sub[j]){
         stts = 1;
         return isContained(whole, sub, stts, i+1,j+1);
-    }
-    else{
+    }else{
         stts = 0;
         return isContained(whole, sub, stts,i+1, 0);
     }
+
 }
