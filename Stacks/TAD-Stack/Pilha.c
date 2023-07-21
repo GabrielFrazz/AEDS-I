@@ -14,44 +14,8 @@ void FPVazia(TPilha *Pilha){
 
 }
 
-void LerProduto(TProduto *x){
 
-    printf("---Digite as informacoes do produto---\n");
-    printf("entre com o codigo: ");
-    fflush(stdin);
-    scanf("%d", &x->codigo);
-    printf("entre com a quantidade: ");
-    fflush(stdin);
-    scanf("%d", &x->quantidade);
-    printf("entre com o preco: ");
-    fflush(stdin);
-    scanf("%f", &x->preco);
-    printf("entre com o nome: ");
-    fflush(stdin);
-    fgets(x->nome, 50, stdin);
-    printf("entre com a descricao: ");
-    fflush(stdin);
-    fgets(x->descricao, 100, stdin);
-
-}
-
-void ImprimirProduto(TProduto x) {
-
-    printf("\n---------------------------\n");
-
-    printf("\nCodigo: %d\n", x.codigo);
-    printf("\nNome: ");
-    puts(x.nome);
-    printf("Descricao: ");
-    puts(x.descricao);
-    printf("Preco: R$ %.2f\n", x.preco);
-    printf("\nQuantidade: %d\n", x.quantidade);
-
-    printf("\n---------------------------\n");
-
-}
-
-int Vazia(TPilha Pilha){
+int VaziaPilha(TPilha Pilha){
 
     return(Pilha.fundo==Pilha.topo);
 
@@ -71,7 +35,7 @@ void Empilhar(TProduto x, TPilha *Pilha){
 void Desempilhar(TPilha *Pilha, TProduto *Item){
 
     TCelula *q;
-    if(Vazia(*Pilha)){
+    if(VaziaPilha(*Pilha)){
         printf("Erro: Pilha vazia\n");
         return;
     }
@@ -85,7 +49,7 @@ void Desempilhar(TPilha *Pilha, TProduto *Item){
 
 void imprimirPilha(TPilha *Pilha){
 
-    if(Vazia(*Pilha)){
+    if(VaziaPilha(*Pilha)){
         return;
     }
 
@@ -106,17 +70,17 @@ void invertePilhaDuasPilhas(TPilha *Pilha){
     FPVazia(&Aux1);
     FPVazia(&Aux2);
 
-    while(!Vazia(*Pilha)){
+    while(!VaziaPilha(*Pilha)){
         Desempilhar(Pilha, &x);
         Empilhar(x, &Aux1);
     }
 
-    while (!Vazia(Aux1)){
+    while (!VaziaPilha(Aux1)){
         Desempilhar(&Aux1, &x);
         Empilhar(x, &Aux2);
     }
 
-    while (!Vazia(Aux2)){
+    while (!VaziaPilha(Aux2)){
         Desempilhar(&Aux2, &x);
         Empilhar(x, Pilha);
     }
@@ -164,6 +128,23 @@ void invertePilhaUmaPilha(TPilha *Pilha){
 
 void invertePilhaFila(TPilha *Pilha){
     
+    TFila Fila;
+    FFVazia(&Fila);
+
+    TProduto x;
+
+    while(!VaziaPilha(*Pilha)){
+        Desempilhar(Pilha, &x);
+        Enfileirar(x, &Fila);
+    }
+
+    while(!VaziaFila(Fila)){
+        Desenfileirar(&Fila, &x);
+        Empilhar(x, Pilha);
+    }
+
+    LiberarFila(&Fila);
+
 }
 
 int PesquisarPilha(TPilha *Pilha, TProduto *Item){
@@ -172,13 +153,13 @@ int PesquisarPilha(TPilha *Pilha, TProduto *Item){
     TProduto x;
     FPVazia(&Aux);
 
-    while(!Vazia(*Pilha)){
+    while(!VaziaPilha(*Pilha)){
         Desempilhar(Pilha, &x);
         Empilhar(x, &Aux);
         if(x.codigo == Item->codigo){
             Desempilhar(&Aux, Item);
             Empilhar(x, &Aux);
-            while(!Vazia(Aux)){
+            while(!VaziaPilha(Aux)){
                 Desempilhar(&Aux, &x); 
                 Empilhar(x, Pilha);
             }
@@ -187,10 +168,12 @@ int PesquisarPilha(TPilha *Pilha, TProduto *Item){
 
     }
 
-    while(!Vazia(Aux)){
+    while(!VaziaPilha(Aux)){
         Desempilhar(&Aux, &x); 
         Empilhar(x, Pilha);
     }
+
+    liberarPilha(&Aux);
 
     return 0;
 
@@ -199,7 +182,7 @@ int PesquisarPilha(TPilha *Pilha, TProduto *Item){
 void liberarPilha(TPilha *Pilha){
 
     TProduto x;
-    while (!Vazia(*Pilha))
+    while (!VaziaPilha(*Pilha))
     {
         Desempilhar(Pilha, &x);
     }

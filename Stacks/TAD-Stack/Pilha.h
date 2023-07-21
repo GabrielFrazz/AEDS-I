@@ -4,19 +4,8 @@
 #ifndef LISTA_H_INCLUDED
 #define LISTA_H_INCLUDED
 
-
-typedef struct {
-    int codigo;
-    float preco;
-    char nome[50];
-    char descricao[100];
-    int quantidade;
-} TProduto;
-
-typedef struct celula{
-    TProduto item;
-    struct celula* prox;
-} TCelula;
+#include "util.h"
+#include "queue.h"
 
 typedef struct {
     TCelula* topo;
@@ -26,11 +15,7 @@ typedef struct {
 
 void FPVazia(TPilha *Pilha);
 
-void LerProduto(TProduto *x);
-
-void ImprimirProduto(TProduto x);
-
-int Vazia(TPilha Pilha);
+int VaziaPilha(TPilha Pilha);
 
 void Empilhar(TProduto x, TPilha *Pilha);
 
@@ -41,6 +26,8 @@ void imprimirPilha(TPilha *Pilha);
 void invertePilhaUmaPilha(TPilha *Pilha);
 
 void invertePilhaDuasPilhas(TPilha *Pilha);
+
+void invertePilhaFila(TPilha *Pilha);
 
 void liberarPilha(TPilha *Pilha);
 

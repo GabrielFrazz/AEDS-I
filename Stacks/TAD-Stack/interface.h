@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "Pilha.h"
+#include "queue.h"
 
 void MSG_MENU(); // MENSAGEM PARA EXIBIR O MENU PRINCIPAL
 

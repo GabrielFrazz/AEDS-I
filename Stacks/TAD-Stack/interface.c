@@ -61,23 +61,9 @@ void MENU(TPilha *Pilha){
                 break;    
             case 4:
                 system("cls");    
-                printf("\nentre com o codigo do produto a ser excluido\n");
-                printf("->");
-                scanf("%d", &produto.codigo);
-                
-                if(PesquisarPilha(Pilha, &produto) == 1){
-                    int ch;
-                    printf("\nProduto a ser excluido:\n\n");
-                    ImprimirProduto(produto);
-                    printf("deseja continuar? 1-(sim)_2-(nao)");
-                    printf("\n->");
-                    scanf("%d", &ch);
-                    if(ch == 1){
-                        Desempilhar(Pilha, &produto);
-                    }else{
-                        printf("\nproduto nao encontrado");
-                    }
-                }
+                Desempilhar(Pilha, &produto);
+                printf("\nproduto:\n");
+                ImprimirProduto(produto); 
                 system("PAUSE");
                 break;
             case 5:
@@ -93,6 +79,10 @@ void MENU(TPilha *Pilha){
                 system("PAUSE");
                 break;
             case 7:
+                system("cls");
+                invertePilhaFila(Pilha);
+                printf("\n\tpilha invertida!\n");
+                system("PAUSE");
                 break;
             case 8:
                 system("cls");
