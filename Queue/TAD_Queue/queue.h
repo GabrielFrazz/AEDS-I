@@ -29,17 +29,15 @@ int Vazia(TFila Fila);
 
 void Enfileirar(TProduto x, TFila *Fila);
 
-void Imprimir(TFila Fila);
-
-TCelula* Pesquisar(TFila Fila, TProduto Item);
-
 void Desenfileirar(TFila *Fila, TProduto *Item);
 
 void recursivePrintQueue(TCelula *Celula);
 
-int recursiveSearch(TCelula *Celula, TProduto *Item);
+int PesquisarFila(TFila *Fila, TProduto *Item);
 
-void queueCpy(TFila fila1, TFila *fila2);
+void queueCpy(TFila *fila1, TFila *fila2);
+
+void invertsQueue(TFila *Fila);
 
 void LiberarFila(TFila *Fila);
 

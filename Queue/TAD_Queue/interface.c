@@ -7,11 +7,13 @@
 void MSG_MENU()
 {
     printf("\n\n\t>>>>>>>>>>>>>>>>>>>>>>> OPCOES DE MENU <<<<<<<<<<<<<<<<<<<<<<<<");
-    printf("\n\n\t1. INSERIR");
+    printf("\n\n\t1. ENFILEIRAR");
     printf("  \n\t2. PESQUISAR");
-    printf("  \n\t3. EXCLUIR");
+    printf("  \n\t3. DESENFILEIRAR");
     printf("  \n\t4. IMPRIMIR");
-    printf("  \n\t5. SAIR");
+    printf("  \n\t5. COPIAR");
+    printf("  \n\t6. IVERTER");
+    printf("  \n\t7. SAIR");
 
 }
 
@@ -47,51 +49,42 @@ void MENU(TFila *Fila){
                 scanf("%d",&produto.codigo);
                 fflush(stdin);
 
-                Aux = recursiveSearch(Fila, produto);
+                int a = PesquisarFila(Fila, &produto);
 
-                if(Aux != NULL){
-                    ImprimirProduto(Aux->item);
+                if(a == 1){
+                    ImprimirProduto(produto);
                 }else{
-                    printf("\n!produto não está na Fila!\n");
+                    printf("\n!produto nao esta na Fila!\n");
                 }
                 system("PAUSE");
                 break;
             case 3:
-                system("cls");
-                printf("\ndigite o codigo do produto que deseja Excluir:\n");
-                printf("->");
-                fflush(stdin);
-                scanf("%d",&produto.codigo);
-
-                Aux = recursiveSearch(Fila, produto);
-
-                if(Aux != NULL){
-                    printf("\n------Produto a ser excluido------\n");
-                    ImprimirProduto(Aux->item);
-
-                    int c;
-                    printf("\n\tTem certeza que deseja continuar? (1-sim, 0-nao)\n");
-                    printf("->");
-                    fflush(stdin);
-                    scanf("%d",&c);
-
-                    if(c == 1){
-                        ExcluirDL(Fila, &produto);
-                        printf("\n!Produto excluido com sucesso!\n");
-                    }
-
-                }else{
-                    printf("\n!Produto nao encontrado!\n");
-                }
-
+                system("cls");    
+                Desenfileirar(Fila, &produto);
+                printf("\nproduto:\n");
+                ImprimirProduto(produto);
                 system("PAUSE");
                 break;
             case 4:
                 system("cls");
-                recursivePrintQueue(Fila);
+                recursivePrintQueue(Fila->frente->prox);
                 system("PAUSE");
                 break;
             case 5:
+                system("cls");
+                TFila Fila2;
+                FFVazia(&Fila2);
+                queueCpy(Fila, &Fila2);
+                recursivePrintQueue(Fila2.frente->prox);
+                system("PAUSE");
+                break;
+            case 6:
+                system("cls");
+                invertsQueue(Fila);
+                printf("\n\tfila invertida!\n");
+                system("PAUSE");
+                break;
+            case 7:
                 system("cls");
                 printf("\n\n\n\t >>>>>> MSG: Saindo do MODULO...!!! <<<<<<\n");
                 LiberarFila(Fila);
@@ -102,5 +95,5 @@ void MENU(TFila *Fila){
                 printf("\n\n\n\t >>>>>> MSG: Digite uma opcao valida!!! <<<<<<");
                 system("PAUSE");
             } // fim do bloco switch
-    } while(opcao != 5);
+    } while(opcao != 7);
 }

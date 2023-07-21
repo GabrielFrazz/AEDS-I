@@ -24,15 +24,6 @@ void Enfileirar(TProduto x, TFila *Fila){
     Fila -> tamanho++;
 }
 
-void Imprimir(TFila Fila){
-    TCelula* Aux;
-    Aux = Fila.frente -> prox;
-    while(Aux != NULL){
-        ImprimirProduto(Aux->item);
-        Aux = Aux -> prox;
-    }
-}
-
 void recursivePrintQueue(TCelula *Celula){
     
     if(Celula != NULL){
@@ -42,14 +33,41 @@ void recursivePrintQueue(TCelula *Celula){
 
 }
 
-int recursiveSearch(TFila *Fila, TProduto *Item){
+int PesquisarFila(TFila *Fila, TProduto *Item){
 
-    if(Vazia(*Fila)){
-        return 0;
+    TFila Aux;
+    FFVazia(&Aux);
+
+    int tst;
+    int codigo = Item->codigo;
+
+    while(!Vazia(*Fila)){
+        Desenfileirar(Fila, Item);
+        Enfileirar(*Item, &Aux);
+        if(Item->codigo == codigo){
+            tst = 1;
+            break;
+        }    
     }
 
-    Desenfileirar(Fila, Item);
+    TProduto x;
+    while (!Vazia(*Fila)){
+        Desenfileirar(Fila, &x);
+        Enfileirar(x, &Aux);
+    }
+
+    while (!Vazia(Aux)){
+        Desenfileirar(&Aux, &x);
+        Enfileirar(x, Fila);
+    }
     
+    if(tst == 1)
+        return 1;
+
+    return 0;
+
+    LiberarFila(&Aux);
+
 }
 
 void Desenfileirar(TFila *Fila, TProduto *Item){
@@ -95,6 +113,15 @@ void LiberarFila(TFila *Fila){
 
 void invertsQueue(TFila *Fila){
 
+    if(Vazia(*Fila)){
+        return;
+    }
+
+    TProduto x;
+
+    Desenfileirar(Fila, &x);
+    invertsQueue(Fila);
+    Enfileirar(x, Fila);
 
 }
 
