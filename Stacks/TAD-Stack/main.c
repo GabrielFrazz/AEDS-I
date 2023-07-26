@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 #include "interface.h"
-
+ 
 int main()
 {
     TPilha Pilha;

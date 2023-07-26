@@ -63,7 +63,7 @@ void MENU(TPilha *Pilha){
                 system("cls");    
                 Desempilhar(Pilha, &produto);
                 printf("\nproduto:\n");
-                ImprimirProduto(produto); 
+                ImprimirProduto(produto);
                 system("PAUSE");
                 break;
             case 5:
