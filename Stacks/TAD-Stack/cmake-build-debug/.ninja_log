@@ -1,0 +1,7 @@
+# ninja log v5
+26	214	7136366941416783	CMakeFiles/TAD_Stack.dir/util.c.obj	a4a410e9089cd983
+1	222	7136366941406729	CMakeFiles/TAD_Stack.dir/main.c.obj	e40f7a63f628c64
+19	233	7136366941586760	CMakeFiles/TAD_Stack.dir/queue.c.obj	14bed2b3fb105db8
+11	234	7136366941586760	CMakeFiles/TAD_Stack.dir/interface.c.obj	f6b3b3d58b4404bd
+34	248	7136366941766790	CMakeFiles/TAD_Stack.dir/Pilha.c.obj	9adaf61b1d580dcb
+248	387	7136366943126872	TAD_Stack.exe	9c6fc2fd4e91a3f5

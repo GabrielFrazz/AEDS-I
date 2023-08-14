@@ -54,6 +54,27 @@ TCelula* Pesquisar(TCelula *x, TItem Item){
         return Pesquisar(x->dir, Item);
 }
 
+//central iterativa
+void CentralIterativa(TCelula *x){
+
+    TCelula *y = x;
+    TCelula *z = x;
+
+   
+    for(;y->esq != NULL; y = y->esq){
+        z = y->pai;
+        printf("%d", y->esq->item.chave);
+    }
+    for(;y->dir != NULL; y = y->pai){
+        for(;y->esq != NULL; y = y->esq){
+            z = y->pai;
+            printf("%d", y->esq->item.chave);
+        }
+        printf("%d", y->dir->item.chave);
+    }
+           
+}
+
 void Central(TCelula *x){
     if (x != NULL){
      Central(x->esq);
@@ -185,7 +206,7 @@ int main(){
     Inserir(&Arvore.raiz,NULL,x);
 
     printf("\n(a) Caminhamento in-ordem:\t");
-    Central(Arvore.raiz);
+    CentralIterativa(Arvore.raiz);
     printf("\n");
     printf("\n(b) Caminhamento pré-ordem:\t");
     PreOrdem(Arvore.raiz);

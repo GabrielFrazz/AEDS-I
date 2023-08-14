@@ -20,7 +20,7 @@ typedef struct {
 }TLista;
 
 //compare, order doesn't matter
-int coparates(TLista Lista1, TLista Lista2){
+int comparates(TLista Lista1, TLista Lista2){
 
     if(Lista1.tamanho != Lista2.tamanho){
         return 0;
@@ -55,7 +55,7 @@ int coparates(TLista Lista1, TLista Lista2){
 }
 
 //compare, order does matter
-int coparates(TLista Lista1, TLista Lista2){
+int comparates(TLista Lista1, TLista Lista2){
 
     if(Lista1.tamanho != Lista2.tamanho){
         return 0;

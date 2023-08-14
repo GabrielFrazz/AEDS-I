@@ -13,7 +13,7 @@ void MSG_MENU()
     printf("  \n\t4. EXCLUIR");
     printf("  \n\t5. EXCLUIR POR POSICAO");
     printf("  \n\t6. IMPRIMIR");
-    printf("  \n\t7. IMPRIMIR POR POSICAO");
+    printf("  \n\t7. INVERTER LISTA");
     printf("  \n\t8. SAIR");
 
 }
@@ -37,7 +37,7 @@ void MENU(TLista* Lista){
                 printf("Entre com um produto:\n\n");
 
                 LerProduto(&produto);
-                isertInOrder(Lista,produto);
+                Inserir(produto, Lista);
                 printf("\n");
 
                 system("PAUSE");
@@ -125,11 +125,8 @@ void MENU(TLista* Lista){
                 break;
             case 7:
                 system("cls");
-                printf("\ndigite a posicao do produto que deseja Imprimir:\n");
-                printf("->");
-                fflush(stdin);
-                scanf("%d", &produto.codigo);
-                printNthElement(*Lista, produto.codigo);
+                invertsList(Lista);
+                printf("\n!Lista foi invertida!\n");
                 system("PAUSE");
                 break;
             case 8:

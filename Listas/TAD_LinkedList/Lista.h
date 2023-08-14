@@ -32,6 +32,8 @@ void Inserir(TProduto x, TLista *Lista);
 
 void isertInOrder(TLista *Lista, TProduto x);
 
+void invertsList(TLista *Lista);
+
 void Imprimir(TLista Lista);
 
 void recursivePrintList(TCelula *Celula);

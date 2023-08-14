@@ -47,6 +47,26 @@ void isertInOrder(TLista *Lista, TProduto x){
 
 }
 
+void invertsList(TLista *Lista){
+
+    TCelula *Anterior, *Atual, *Proximo;
+    Anterior = Proximo = NULL;
+    Atual = Lista->primeiro->prox;
+
+    while(Atual != NULL){
+
+        Proximo = Atual->prox;
+        Atual->prox = Anterior;
+        Anterior = Atual;
+        Atual = Proximo;
+
+    }
+
+    Lista->ultimo = Lista->primeiro->prox;
+    Lista->primeiro->prox = Anterior;
+    
+}
+
 
 void Imprimir(TLista Lista){
     TCelula* Aux;

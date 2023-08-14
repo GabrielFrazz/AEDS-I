@@ -3,12 +3,12 @@
 
 #include "tree.h"
 
-void Iniciar(TCelula **no){
+void Iniciar(Tnode **no){
     *no = NULL;
 }
 
-TCelula *criaNo(TItem Item){
-    TCelula *no = (TCelula*) malloc(sizeof(TCelula));
+Tnode *criaNo(TItem Item){
+    Tnode *no = (Tnode*) malloc(sizeof(Tnode));
     no->pai = NULL;
     no->esq = NULL;
     no->dir = NULL;
@@ -16,7 +16,7 @@ TCelula *criaNo(TItem Item){
     return no;
 }
 
-void Inserir(TCelula **x, TCelula *pai, TItem Item){
+void Inserir(Tnode **x, Tnode *pai, TItem Item){
     if((*x) == NULL){
         (*x) = criaNo(Item);
         if(pai != NULL)
@@ -31,7 +31,7 @@ void Inserir(TCelula **x, TCelula *pai, TItem Item){
         Inserir(&(*x)->dir, (*x), Item);
 }
 
-TCelula* Pesquisar(TCelula *x, TItem Item){
+Tnode* Pesquisar(Tnode *x, TItem Item){
     if((x == NULL)||(x->item.chave == Item.chave))
         return x;
     if(Item.chave < x->item.chave)
@@ -40,7 +40,7 @@ TCelula* Pesquisar(TCelula *x, TItem Item){
         return Pesquisar(x->dir, Item);
 }
 
-void Central(TCelula *x){
+void Central(Tnode *x){
     if (x != NULL){
      Central(x->esq);
      printf("%d ",x->item.chave);
@@ -48,7 +48,36 @@ void Central(TCelula *x){
     }
 }
 
-void PreOrdem(TCelula *x){
+void CentralIterativo(Tnode *x){
+    
+    TItem item;
+    TPilha aux;
+    FPVazia(&aux);
+
+    int loop = 0;
+
+    Tnode* atual = x;
+
+    while(!loop){
+
+        if(atual != NULL){
+            Empilhar(atual->item, &aux);
+            atual = atual->esq;
+        }
+        else{
+            if(!VaziaPilha(aux)){
+                Desempilhar(&aux, &item);
+                atual = aux.topo;
+                printf("%d ", item.chave);
+                atual = atual->dir;
+            }else{
+                loop = 1;
+            }
+        }
+    }
+}
+
+void PreOrdem(Tnode *x){
     if (x != NULL){
      printf("%d ",x->item.chave);
      PreOrdem(x->esq);
@@ -56,7 +85,34 @@ void PreOrdem(TCelula *x){
     }
 }
 
-void PosOrdem(TCelula *x){
+void PreOrdemIterativo(Tnode *x){
+    
+    if(x == NULL){
+        return;
+    }
+
+    TPilha aux1, aux2;
+    FPVazia(&aux1);
+    FPVazia(&aux2);
+
+    Empilhar(x->item, &aux1);
+
+    while(!VaziaPilha(aux1)){
+        Tnode *node = aux1.topo;
+        printf("%d ", node->item.chave);
+        Desempilhar(&aux1, &node->item);
+
+        TItem item;
+
+        if (node->dir)
+            Empilhar(x->dir->item, &aux1);
+        if (node->esq)
+            Empilhar(x->esq->item, &aux1);
+    }
+
+}
+
+void PosOrdem(Tnode *x){
     if (x != NULL){
      PosOrdem(x->esq);
      PosOrdem(x->dir);
@@ -64,7 +120,7 @@ void PosOrdem(TCelula *x){
     }
 }
 
-TCelula* Minimo(TCelula *x){
+Tnode* Minimo(Tnode *x){
     if (x == NULL)
         return NULL;
     while(x->esq != NULL){
@@ -73,7 +129,7 @@ TCelula* Minimo(TCelula *x){
     return x;
 }
 
-TCelula* Maximo(TCelula *x){
+Tnode* Maximo(Tnode *x){
     if (x == NULL)
         return NULL;
     while(x->dir != NULL){
@@ -82,12 +138,12 @@ TCelula* Maximo(TCelula *x){
     return x;
 }
 
-TCelula* Sucessor(TCelula *x){
+Tnode* Sucessor(Tnode *x){
     if(x == NULL)
         return NULL;
     if(x->dir != NULL)
         return Minimo(x->dir);
-    TCelula *y = x->pai;
+    Tnode *y = x->pai;
     while(y != NULL && x == y->dir){
         x = y;
         y = y->pai;
@@ -95,12 +151,12 @@ TCelula* Sucessor(TCelula *x){
     return y;
 }
 
-TCelula* Predecessor(TCelula *x){
+Tnode* Predecessor(Tnode *x){
     if(x == NULL)
         return x;
     if(x->esq != NULL)
         return Maximo(x->esq);
-    TCelula* y = x->pai;
+    Tnode* y = x->pai;
     while(y != NULL && x == y->esq){
         x = y;
         y = y->pai;
@@ -109,7 +165,7 @@ TCelula* Predecessor(TCelula *x){
 }
 
 // Substitui subárvore enraizada no nó 'u' pela subárvore enraizada no nó 'v'.
-void Transplante(TArvore *Arvore, TCelula **u, TCelula **v){
+void Transplante(TArvore *Arvore, Tnode **u, Tnode **v){
     if ((*u)->pai == NULL)
         Arvore->raiz = (*v);
     else if((*u) == (*u)->pai->esq)
@@ -122,7 +178,7 @@ void Transplante(TArvore *Arvore, TCelula **u, TCelula **v){
 }
 
 // Retira um nó 'z' na árvore 'Arvore'.
-void Retirar(TArvore *Arvore, TCelula **z){
+void Retirar(TArvore *Arvore, Tnode **z){
     if (*z == NULL){
         printf("\n>>>>> AVISO: NO' \"z\" E' NULO! <<<<<\n");
         return;
@@ -132,7 +188,7 @@ void Retirar(TArvore *Arvore, TCelula **z){
     else if((*z)->dir == NULL)
         Transplante(Arvore, z, &(*z)->esq);
     else{
-        TCelula *y = Minimo((*z)->dir);
+        Tnode *y = Minimo((*z)->dir);
         if(y->pai != (*z)){
             Transplante(Arvore, &y, &y->dir);
             y->dir = (*z)->dir;

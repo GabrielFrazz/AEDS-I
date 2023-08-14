@@ -24,8 +24,8 @@ void MENU(TArvore *Arvore){
 
     int num;
     TItem x;
-    TCelula celula;
-    TCelula *y;
+    Tnode node;
+    Tnode *y;
 
     int opcao;
      do
@@ -141,8 +141,9 @@ void MENU(TArvore *Arvore){
             
             Retirar(Arvore, &y);
 
-            if(&y!=NULL)
+            if(&y!=NULL){
                 printf("\n\tExclusao bem sucedida!\n");
+            }
             
             system("PAUSE");
             break;
