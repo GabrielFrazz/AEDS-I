@@ -21,6 +21,7 @@ int main(int argc, char** argv){
     glutCreateWindow ("tictactoe");
     init();
 
+
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboard);
     glutMouseFunc(mouse);

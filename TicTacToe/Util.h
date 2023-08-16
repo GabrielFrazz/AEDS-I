@@ -1,6 +1,7 @@
 
 #ifndef TICTACTOE_UTIL_H
 #define TICTACTOE_UTIL_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <GL/glut.h>

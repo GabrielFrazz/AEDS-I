@@ -17,7 +17,11 @@ typedef struct cell{
 
 TCell *createsNode(TBoard board);
 
-int minimax(TCell *node, int isMaximizing);
+void buildTree(TCell *cell, int player);
+
+int evaluate(const TBoard *board, int player);
+
+int minimax(TCell *node, int depth, int maximizingPlayer);
 
 void makeBestMove(TCell *actual);
 

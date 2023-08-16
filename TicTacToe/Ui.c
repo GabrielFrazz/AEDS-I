@@ -124,7 +124,7 @@ void renderPoints(void){
     drawText(WIDTH / 500, HEIGHT - 310, "Esc - Exit");
 }
 
-void renderSubMenu() {
+void renderSubMenu(void) {
 
     int submenuWidth = 200;
     int submenuHeight = 200;
@@ -184,6 +184,7 @@ void renderAboutTheGame() {
     drawText(WIDTH / 500, HEIGHT - 460, "M - Menu");
 
 }
+
 
 
 

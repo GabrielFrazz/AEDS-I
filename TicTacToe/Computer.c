@@ -15,90 +15,100 @@ TCell *createsNode(TBoard b){
     return no;
 }
 
-int evaluate(TBoard board) {
-    int lines[8][3] = {
-            {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // Horizontal
-            {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // Vertical
-            {0, 4, 8}, {2, 4, 6}             // Diagonal
+void buildTree(TCell *cell, int player) {
+    for (int i = 0; i < 9; i++) {
+        if (cell->board.grid[i] == 0) {
+
+            TCell *newCell = createsNode(cell->board);
+            newCell->board.grid[i] = player;
+            newCell->pai = cell;
+            cell->branch[i] = newCell;
+
+            if (!evaluate(&(newCell->board), -player) && !isBoarFull((newCell->board))) {
+                buildTree(newCell, -player);
+            }
+        }
+    }
+}
+
+
+int evaluate(const TBoard *board, int player) {
+
+    const int winPatterns[8][3] = {
+            {0, 1, 2}, {3, 4, 5}, {6, 7, 8}, // Rows
+            {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, // Columns
+            {0, 4, 8}, {2, 4, 6}            // Diagonals
     };
 
     for (int i = 0; i < 8; i++) {
-        int sum = board.grid[lines[i][0]] + board.grid[lines[i][1]] + board.grid[lines[i][2]];
-        if (sum == 3) return 10;
-        if (sum == -3) return -10;
-    }
+        int a = winPatterns[i][0];
+        int b = winPatterns[i][1];
+        int c = winPatterns[i][2];
 
+        if (board->grid[a] == player && board->grid[b] == player && board->grid[c] == player) {
+            return 1;
+        }
+    }
     return 0;
 }
 
-int minimax(TCell *node, int isMaximizing) {
+int minimax(TCell *node, int depth, int maximizingPlayer) {
 
-    TBoard board = node->board;
-
-    int score = evaluate(board);
-    if (score != 0) {
-        return score;
+    if (evaluate(&(node->board), -1)) {
+        return 10 - depth;
+    } else if (evaluate(&(node->board), 1)) {
+        return depth - 10;
+    } else if (isBoarFull((node->board))) {
+        return 0;
     }
 
-    if (isMaximizing) {
-        int bestScore = -1000000;
+    if (maximizingPlayer) {
+        int bestScore = -100000;
+
         for (int i = 0; i < 9; i++) {
-            if (board.grid[i] == 0) {
-                board.grid[i] = -1;
-                TCell *child = createsNode(board);
-                node->branch[i] = child;
-                int currentScore = -minimax(child, 0);
-                board.grid[i] = 0;
-                if (currentScore > bestScore) {
-                    bestScore = currentScore;
-                }
+            TCell *child = node->branch[i];
+            if (child != NULL) {
+                int score = minimax(child, depth + 1, 0);
+                bestScore = score > bestScore ? score : bestScore;
             }
         }
-        node->score = bestScore;
+
         return bestScore;
     } else {
-        int bestScore = 1000;
+        int bestScore = 100000;
+
         for (int i = 0; i < 9; i++) {
-            if (board.grid[i] == 0) {
-                board.grid[i] = 1;
-                TCell *child = createsNode(board);
-                node->branch[i] = child;
-                int currentScore = minimax(child, 1);
-                board.grid[i] = 0;
-                if (currentScore < bestScore) {
-                    bestScore = currentScore;
-                }
+            TCell *child = node->branch[i];
+            if (child != NULL) {
+                int score = minimax(child, depth + 1, 1);
+                bestScore = score < bestScore ? score : bestScore;
             }
         }
-        node->score = bestScore;
+
         return bestScore;
     }
 }
 
+
 void makeBestMove(TCell *actual) {
 
-    int bestMove = -1;
-    int bestScore = -1000;
+
+    int bestScore = -100000;
+    int bestMove = 0;
 
     for (int i = 0; i < 9; i++) {
-        if (current.grid[i] == 0) {
-            TCell *child = actual->branch[i];
-            if (child == NULL) {
-                child = createsNode(actual->board);
-                child->board.grid[i] = -1;
-                actual->branch[i] = child;
-            }
-            int currentScore = minimax(child, 0);
-            if (currentScore > bestScore) {
-                bestScore = currentScore;
+        TCell *move = actual->branch[i];
+        if (move != NULL) {
+            int score = minimax(move, 0, 0);
+            if (score > bestScore) {
+                bestScore = score;
                 bestMove = i;
             }
         }
     }
 
-    if (bestMove != -1) {
-        current.grid[bestMove] = -1;
-    }
+    current.grid[bestMove] = -1;
+
 }
 
 

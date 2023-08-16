@@ -7,11 +7,39 @@
 #include "Game.h"
 #include "Ui.h"
 
-int drawWinner = 0;
+int drawWinner = -1;
 
 TBoard current = {
         .grid = {0, 0, 0, 0, 0, 0, 0, 0, 0}
 };
+
+void initializeBoard(TBoard *board) {
+    for (int i = 0; i < 9; i++) {
+        board->grid[i] = 0;
+    }
+}
+
+int isBoarFull(TBoard board){
+
+    for(int i = 0; i < 9; i++) {
+        if (board.grid[i] == 0) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
+
+int isBoarEmpty(TBoard board){
+
+    for(int i = 0; i < 9; i++) {
+        if (board.grid[i] != 0) {
+            return 0;
+        }
+    }
+
+    return 1;
+}
 
 void drawO(GLfloat x, GLfloat y) {
 
@@ -49,7 +77,6 @@ void drawX(int x, int y) {
     glColor3f(0.4f, 0.7f, 1.0f);
 
 
-    // Draw the crossed lines
     glBegin(GL_LINES);
     glVertex2i(x+5, y+5);
     glVertex2i(x + (WIDTH / 3)-5, y + (HEIGHT / 3)-5);
@@ -120,7 +147,9 @@ void display(void) {
             }
         }
 
-        if (winner != 0) {
+        checkWin();
+
+        if (winner != 0 && winner != -100) {
             currentState = SUB;
             glColor3f(1.0, 0.0, 0.0);
             glLineWidth(6.0);

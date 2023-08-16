@@ -42,6 +42,9 @@ static int coordinates[9][2] = {
 
 extern TBoard current;
 
+void initializeBoard(TBoard *board);
+int isBoarFull(TBoard board);
+int isBoarEmpty(TBoard board);
 void drawO(GLfloat x, GLfloat y);
 void drawX(int x, int y);
 void display(void);

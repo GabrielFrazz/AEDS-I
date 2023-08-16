@@ -26,7 +26,8 @@ void keyboard(unsigned char key, int x, int y){
             break;
         case 'P':
         case 'p':
-            currentState = SCORE;
+            if(currentState == GAMEPLAY)
+                currentState = SCORE;
             display();
             break;
         case 'M':

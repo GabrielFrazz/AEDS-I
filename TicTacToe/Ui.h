@@ -24,6 +24,6 @@ void renderGameModeSelection(void);
 void renderControls(void);
 void renderAboutTheGame(void);
 void renderPoints(void);
-void renderSubMenu();
+void renderSubMenu(void);
 
 #endif //TICTACTOE_UI_H
