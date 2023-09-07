@@ -14,8 +14,8 @@ typedef struct {
 
 typedef struct celula{
     TProduto item;
-    struct celula* ant;
-    struct celula* prox;
+    struct celula *ant;
+    struct celula *prox;
 } TCelula;
 
 typedef struct {
