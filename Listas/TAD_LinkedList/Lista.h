@@ -50,6 +50,8 @@ void deleteNthElement(TLista Lista, int nth);
 
 void LiberarLista(TLista *Lista);
 
+int numeroDeCelulas(TLista *Lista);
+
 void LerProduto(TProduto *x);
 
 void ImprimirProduto(TProduto x);

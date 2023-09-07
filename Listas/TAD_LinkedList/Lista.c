@@ -177,6 +177,32 @@ void LiberarLista(TLista *Lista){
 
 }
 
+int numeroDeCelulas(TLista *Lista){
+
+    TCelula *Aux;
+    Aux = Lista->primeiro;
+    int cont = 0;
+
+    while(Aux != NULL){
+        cont++;
+        Aux = Aux->prox;
+    }
+
+    return cont;
+
+}
+
+int numeroDeCelulasRec(TCelula *Celula, int cont){
+
+    cont++;
+    if(Celula->prox == NULL){
+        return cont+1;
+    }
+
+    numeroDeCelulasRec(Celula->prox, cont);
+
+}
+
 void LerProduto(TProduto *x){
     printf("---Digite as informacoes do produto---\n");
     printf("entre com o codigo: ");
