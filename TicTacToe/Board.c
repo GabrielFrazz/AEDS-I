@@ -4,8 +4,6 @@
 #include <math.h>
 
 #include "Board.h"
-#include "Game.h"
-#include "Ui.h"
 
 int drawWinner = -1;
 
@@ -72,7 +70,7 @@ void drawO(GLfloat x, GLfloat y) {
 void drawX(int x, int y) {
 
     glLineWidth(5.0);
-    glEnable(GL_LINE_SMOOTH); // anti-aliasing
+    glEnable(GL_LINE_SMOOTH);
 
     glColor3f(0.4f, 0.7f, 1.0f);
 
@@ -90,7 +88,7 @@ void drawX(int x, int y) {
 void display(void) {
     glClear(GL_COLOR_BUFFER_BIT);
 
-    // background color
+
     glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 
     if (currentState == MENU) {
@@ -104,16 +102,13 @@ void display(void) {
     }else if(currentState == ABOUT){
         renderAboutTheGame();
     }else if (currentState == GAMEPLAY || currentState == SUB) {
-        // Render game board
 
-        // Set background color
         glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
 
-        // Draw board grid lines
         glLineWidth(5.0);
         glColor3f(0.2f, 0.2f, 0.2f);
 
-        // Draw vertical lines
+
         for (int i = 1; i < 3; ++i) {
             glBegin(GL_LINES);
             glVertex2i(WIDTH / 3 * i, 0);
@@ -121,7 +116,7 @@ void display(void) {
             glEnd();
         }
 
-        // Draw horizontal lines
+
         for (int i = 1; i < 3; ++i) {
             glBegin(GL_LINES);
             glVertex2i(0, HEIGHT / 3 * i);
@@ -129,7 +124,7 @@ void display(void) {
             glEnd();
         }
 
-        // Draw X and O symbols
+
         for (int i = 0; i < 9; i++) {
             if (current.grid[i] == 1) {
                 drawX(coordinates[i][0], coordinates[i][1]);

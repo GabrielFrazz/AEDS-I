@@ -14,6 +14,8 @@
 #define MARGIN_CUT 10
 
 #include "Game.h"
+#include "Ui.h"
+
 
 typedef struct {
     int grid[9];

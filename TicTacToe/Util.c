@@ -4,8 +4,7 @@
 #include <string.h>
 #include <math.h>
 
-#include "Board.h"
-#include "Ui.h"
+
 #include "Util.h"
 
 int turn = 1;

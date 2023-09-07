@@ -9,6 +9,7 @@
 #include <math.h>
 
 #include "Board.h"
+#include "Ui.h"
 
 
 extern int turn;
